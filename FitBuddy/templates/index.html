@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy - Create Your Plan{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <span class="eyebrow">AI FITNESS PLANNER</span>
+        <h1>Your personal 7-day fitness plan.</h1>
+        <p>Enter your basic fitness details and FitBuddy will create a structured workout routine plus a practical nutrition or recovery tip.</p>
+    </div>
+    <form class="card form-card" action="/generate-workout" method="post">
+        <h2>Create your plan</h2>
+        <label>Name
+            <input name="username" required minlength="2" maxlength="120" placeholder="Your name">
+        </label>
+        <label>User ID
+            <input name="user_id" required maxlength="80" placeholder="e.g. FB001">
+        </label>
+        <div class="grid-2">
+            <label>Age
+                <input name="age" type="number" min="13" max="100" required>
+            </label>
+            <label>Weight (kg)
+                <input name="weight" type="number" min="20" max="300" step="0.1" required>
+            </label>
+        </div>
+        <label>Fitness goal
+            <select name="goal" required>
+                <option value="weight loss">Weight loss</option>
+                <option value="muscle gain">Muscle gain</option>
+                <option value="general wellness">General wellness</option>
+                <option value="flexibility">Flexibility</option>
+            </select>
+        </label>
+        <label>Workout intensity
+            <select name="intensity" required>
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+            </select>
+        </label>
+        <button type="submit">Generate 7-Day Plan</button>
+        <p class="small">General wellness guidance only. Stop if an exercise causes pain and seek professional advice when needed.</p>
+    </form>
+</section>
+{% endblock %}

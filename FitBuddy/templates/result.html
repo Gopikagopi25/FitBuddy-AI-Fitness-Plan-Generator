@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy - Your Plan{% endblock %}
+{% block content %}
+<section class="page-heading">
+    <span class="eyebrow">YOUR FITBUDDY PLAN</span>
+    <h1>Hello, {{ user.username }}.</h1>
+    <p>Goal: <strong>{{ user.goal }}</strong> · Intensity: <strong>{{ user.intensity }}</strong> · {{ user.weight }} kg</p>
+</section>
+
+{% if feedback_message %}
+<div class="success">{{ feedback_message }}</div>
+{% endif %}
+
+<section class="card tip">
+    <h2>Nutrition / Recovery Tip</h2>
+    <p>{{ nutrition_tip }}</p>
+</section>
+
+<section>
+    <h2>7-Day Workout Plan</h2>
+    <div class="days">
+    {% for day in plan.days %}
+        <article class="day-card">
+            <div class="day-header">
+                <span>{{ day.day }}</span>
+                <strong>{{ day.focus }}</strong>
+            </div>
+            <h3>Warm-up</h3>
+            <p>{{ day.warm_up }}</p>
+            <h3>Main workout</h3>
+            <ul>
+                {% for exercise in day.main_workout %}
+                <li>{{ exercise }}</li>
+                {% endfor %}
+            </ul>
+            <h3>Cooldown</h3>
+            <p>{{ day.cooldown }}</p>
+            <h3>Recovery</h3>
+            <p>{{ day.recovery_tip }}</p>
+        </article>
+    {% endfor %}
+    </div>
+</section>
+
+<section class="card feedback">
+    <h2>Refine your plan</h2>
+    <p>Tell FitBuddy what you want changed, such as “more cardio” or “add another rest day”.</p>
+    <form action="/submit-feedback" method="post">
+        <input type="hidden" name="user_id" value="{{ user.user_id }}">
+        <textarea name="feedback" required maxlength="1500" placeholder="What would you like to change?"></textarea>
+        <button type="submit">Update Plan with AI</button>
+    </form>
+</section>
+{% endblock %}
